@@ -1,0 +1,170 @@
+/* Navbar */
+.navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    padding: 1.5rem 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+    transform: translateY(0);
+}
+
+.navbar.hidden {
+    transform: translateY(-100%);
+}
+
+.navbar.visible {
+    transform: translateY(0);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 70px;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.5rem;
+    display: block;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-logo {
+    height: 32px;
+    width: auto;
+    filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.5));
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-light);
+    text-decoration: none;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, var(--accent-purple), var(--accent-light-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+}
+
+.nav-center {
+    display: flex;
+    gap: 2rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    position: relative;
+    transition: color 0.3s ease;
+    padding: 0.5rem 0;
+}
+
+.nav-links a:hover {
+    color: var(--accent-purple);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-purple);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.login-btn, .signup-btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+.login-btn {
+    background-color: transparent;
+    color: var(--accent-purple);
+    border: 1px solid var(--accent-purple);
+}
+
+.signup-btn {
+    background-color: var(--accent-purple);
+    color: white;
+    border: none;
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+}
+
+.login-btn:hover {
+    background-color: rgba(138, 43, 226, 0.1);
+    transform: translateY(-2px);
+}
+
+.signup-btn:hover {
+    background-color: var(--accent-light-purple);
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-center {
+        display: none;
+    }
+    
+    .nav-container {
+        padding: 0.8rem 1.5rem;
+    }
+}

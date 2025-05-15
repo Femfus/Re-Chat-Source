@@ -1,0 +1,32 @@
+==================================================
+TIMESTAMP: 2025-05-10 18:23:49
+TYPE: Frontend Error
+MESSAGE: Failed to compile.
+
+[eslint] 
+src\components\Admin.js
+  Line 548:36:  'searchTerm' is not defined     no-undef
+  Line 549:46:  'setSearchTerm' is not defined  no-undef
+  Line 551:28:  'searchTerm' is not defined     no-undef
+  Line 554:46:  'setSearchTerm' is not defined  no-undef
+
+Search for the keywords to learn more about each error.
+
+==================================================
+
+==================================================
+TIMESTAMP: 2025-05-10 18:23:49
+TYPE: Frontend Error
+MESSAGE: [1m[31mERROR[39m[22m in [1m[eslint] 
+src\components\Admin.js
+  Line 548:36:  'searchTerm' is not defined     no-undef
+  Line 549:46:  'setSearchTerm' is not defined  no-undef
+  Line 551:28:  'searchTerm' is not defined     no-undef
+  Line 554:46:  'setSearchTerm' is not defined  no-undef
+
+Search for the keywords to learn more about each [1m[31merror[39m[22m[1m.[39m[22m
+
+webpack compiled with [1m[31m1 error[39m[22m
+
+==================================================
+

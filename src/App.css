@@ -1,0 +1,70 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: visible;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Special case for dashboard route */
+.App-dashboard {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+main {
+  flex: 1;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--box-shadow);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1rem;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

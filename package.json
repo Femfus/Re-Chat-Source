@@ -1,0 +1,64 @@
+{
+  "name": "re-chat-to",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "axios": "^1.9.0",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "d3-scale": "^4.0.2",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.5.0",
+    "electron": "^36.2.0",
+    "electron-is-dev": "^3.0.1",
+    "express": "^5.1.0",
+    "find-process": "^1.4.10",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.1",
+    "openpgp": "^6.1.0",
+    "portfinder": "^1.0.37",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.5.3",
+    "react-scripts": "5.0.1",
+    "react-simple-maps": "^3.0.0",
+    "styled-components": "^6.1.1",
+    "uuid": "^11.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "cross-env DISABLE_ESLINT_PLUGIN=true CI=false react-scripts build",
+    "build-windows": "cross-env CI=false DISABLE_ESLINT_PLUGIN=true react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "server": "node server/server.js",
+    "dev": "concurrently \"npm run server\" \"npm run start\"",
+    "init-db": "node server/init-db.js",
+    "test-api": "node server/test-api.js",
+    "predeploy": "node build-config.js"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3"
+  }
+}

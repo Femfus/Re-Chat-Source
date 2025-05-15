@@ -1,0 +1,170 @@
+/* Snow Animation */
+.snowflake {
+    position: fixed;
+    top: -10%;
+    z-index: 0;
+    user-select: none;
+    cursor: default;
+    animation-name: snowfall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    color: rgba(255, 255, 255, 0.3);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+/* Create 20 unique snowflakes with different sizes, positions, and animation durations */
+.snowflake:nth-child(1) {
+    left: 5%;
+    animation-duration: 12s;
+    animation-delay: 0s;
+    font-size: 20px;
+}
+
+.snowflake:nth-child(2) {
+    left: 10%;
+    animation-duration: 15s;
+    animation-delay: 1s;
+    font-size: 15px;
+}
+
+.snowflake:nth-child(3) {
+    left: 15%;
+    animation-duration: 10s;
+    animation-delay: 2s;
+    font-size: 18px;
+}
+
+.snowflake:nth-child(4) {
+    left: 20%;
+    animation-duration: 13s;
+    animation-delay: 0.5s;
+    font-size: 12px;
+}
+
+.snowflake:nth-child(5) {
+    left: 25%;
+    animation-duration: 14s;
+    animation-delay: 1.5s;
+    font-size: 16px;
+}
+
+.snowflake:nth-child(6) {
+    left: 30%;
+    animation-duration: 11s;
+    animation-delay: 2.5s;
+    font-size: 14px;
+}
+
+.snowflake:nth-child(7) {
+    left: 35%;
+    animation-duration: 16s;
+    animation-delay: 0.2s;
+    font-size: 19px;
+}
+
+.snowflake:nth-child(8) {
+    left: 40%;
+    animation-duration: 12s;
+    animation-delay: 1.2s;
+    font-size: 13px;
+}
+
+.snowflake:nth-child(9) {
+    left: 45%;
+    animation-duration: 15s;
+    animation-delay: 2.2s;
+    font-size: 17px;
+}
+
+.snowflake:nth-child(10) {
+    left: 50%;
+    animation-duration: 10s;
+    animation-delay: 0.7s;
+    font-size: 15px;
+}
+
+.snowflake:nth-child(11) {
+    left: 55%;
+    animation-duration: 13s;
+    animation-delay: 1.7s;
+    font-size: 18px;
+}
+
+.snowflake:nth-child(12) {
+    left: 60%;
+    animation-duration: 14s;
+    animation-delay: 2.7s;
+    font-size: 12px;
+}
+
+.snowflake:nth-child(13) {
+    left: 65%;
+    animation-duration: 11s;
+    animation-delay: 0.3s;
+    font-size: 16px;
+}
+
+.snowflake:nth-child(14) {
+    left: 70%;
+    animation-duration: 16s;
+    animation-delay: 1.3s;
+    font-size: 14px;
+}
+
+.snowflake:nth-child(15) {
+    left: 75%;
+    animation-duration: 12s;
+    animation-delay: 2.3s;
+    font-size: 19px;
+}
+
+.snowflake:nth-child(16) {
+    left: 80%;
+    animation-duration: 15s;
+    animation-delay: 0.8s;
+    font-size: 13px;
+}
+
+.snowflake:nth-child(17) {
+    left: 85%;
+    animation-duration: 10s;
+    animation-delay: 1.8s;
+    font-size: 17px;
+}
+
+.snowflake:nth-child(18) {
+    left: 90%;
+    animation-duration: 13s;
+    animation-delay: 2.8s;
+    font-size: 15px;
+}
+
+.snowflake:nth-child(19) {
+    left: 95%;
+    animation-duration: 14s;
+    animation-delay: 0.4s;
+    font-size: 18px;
+}
+
+.snowflake:nth-child(20) {
+    left: 98%;
+    animation-duration: 11s;
+    animation-delay: 1.4s;
+    font-size: 12px;
+}
+
+/* Snowfall animation */
+@keyframes snowfall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+    }
+}
+
+/* Make snowflakes purple-tinted to match the theme */
+.purple-snow .snowflake {
+    color: rgba(138, 43, 226, 0.15);
+    text-shadow: 0 0 5px rgba(138, 43, 226, 0.1);
+}

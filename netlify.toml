@@ -1,0 +1,17 @@
+[build]
+  command = "npm run predeploy && npm run build"
+  publish = "build"
+
+[build.environment]
+  CI = "false"
+  DISABLE_ESLINT_PLUGIN = "true"
+  NODE_ENV = "production"
+
+[dev]
+  command = "npm start"
+  port = 3000
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -1,0 +1,20 @@
+
+==================================================
+TIMESTAMP: 2025-05-10 01:14:37
+TYPE: AttributeError
+MESSAGE: 'ServerControlPanel' object has no attribute 'console_autoscroll'
+
+TRACEBACK:
+Traceback (most recent call last):
+  File "c:\Users\Cila\Desktop\re-chat.to\server_control.py", line 1563, in <module>
+    app = ServerControlPanel(root)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Cila\Desktop\re-chat.to\server_control.py", line 267, in __init__
+    self._create_console()
+  File "c:\Users\Cila\Desktop\re-chat.to\server_control.py", line 461, in _create_console
+    variable=self.console_autoscroll)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ServerControlPanel' object has no attribute 'console_autoscroll'
+
+==================================================
+

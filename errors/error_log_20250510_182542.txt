@@ -1,0 +1,44 @@
+==================================================
+TIMESTAMP: 2025-05-10 18:25:42
+TYPE: Frontend Error
+MESSAGE: Failed to compile.
+
+Syntax error: C:\Users\Cila\Desktop\re-chat.to\src\components\Admin.css Unclosed block (548:1)
+ [90m 546 | [39m[33m}[39m
+ [90m 547 | [39m
+[1m[31m>[39m[22m[90m 548 | [39m[33m.content-subheading[39m [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 549 | [39m  font-size[33m:[39m 16px[33m;[39m
+ [90m 550 | [39m  font-weight[33m:[39m 500[33m;[39m
+
+==================================================
+
+==================================================
+TIMESTAMP: 2025-05-10 18:25:42
+TYPE: Frontend Error
+MESSAGE: [1m[31mERROR[39m[22m in [1m./src/components/Admin.css[39m[22m (./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[5].use[2]!./node_modules/source-map-loader/dist/cjs.js!./src/components/Admin.css)
+Module build failed (from ./node_modules/postcss-loader/dist/cjs.js):
+SyntaxError
+
+(548:1) C:\Users\Cila\Desktop\re-chat.to\src\components\Admin.css Unclosed block
+
+ [90m 546 | [39m[33m}[39m
+ [90m 547 | [39m
+[1m[31m>[39m[22m[90m 548 | [39m[33m.content-subheading[39m [33m{[39m
+ [90m     | [39m[1m[31m^[39m[22m
+ [90m 549 | [39m  font-size[33m:[39m 16px[33m;[39m
+ [90m 550 | [39m  font-weight[33m:[39m 500[33m;[39m
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\components\Admin.js
+  Line 548:36:  'searchTerm' is not defined     no-undef
+  Line 549:46:  'setSearchTerm' is not defined  no-undef
+  Line 551:28:  'searchTerm' is not defined     no-undef
+  Line 554:46:  'setSearchTerm' is not defined  no-undef
+
+Search for the keywords to learn more about each [1m[31merror[39m[22m[1m.[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+
+==================================================
+

@@ -1,0 +1,68 @@
+==================================================
+TIMESTAMP: 2025-05-10 19:20:44
+TYPE: Frontend Error
+MESSAGE: Failed to compile.
+
+[eslint] 
+src\components\Admin.js
+  Line 763:50:   'reportsData' is not defined  no-undef
+  Line 763:82:   'reportsData' is not defined  no-undef
+  Line 763:117:  'reportsData' is not defined  no-undef
+  Line 774:50:   'reportsData' is not defined  no-undef
+  Line 785:50:   'reportsData' is not defined  no-undef
+  Line 796:50:   'reportsData' is not defined  no-undef
+  Line 807:53:   'reportsData' is not defined  no-undef
+  Line 811:53:   'reportsData' is not defined  no-undef
+  Line 815:53:   'reportsData' is not defined  no-undef
+  Line 819:53:   'reportsData' is not defined  no-undef
+  Line 828:20:   'reportsData' is not defined  no-undef
+  Line 835:20:   'reportsData' is not defined  no-undef
+  Line 846:20:   'reportsData' is not defined  no-undef
+  Line 864:20:   'reportsData' is not defined  no-undef
+
+Search for the keywords to learn more about each error.
+
+==================================================
+
+==================================================
+TIMESTAMP: 2025-05-10 19:20:44
+TYPE: Frontend Error
+MESSAGE: [1m[33mWARNING[39m[22m in [1m[eslint] 
+src\components\Admin.js
+  Line 13:10:  'systemData' is assigned a value but never used             no-unused-vars
+  Line 13:22:  'setSystemData' is assigned a value but never used          no-unused-vars
+  Line 50:10:  'reportStatusFilter' is assigned a value but never used     no-unused-vars
+  Line 50:30:  'setReportStatusFilter' is assigned a value but never used  no-unused-vars
+  Line 57:10:  'selectedReport' is assigned a value but never used         no-unused-vars
+  Line 57:26:  'setSelectedReport' is assigned a value but never used      no-unused-vars
+  Line 58:10:  'showReportModal' is assigned a value but never used        no-unused-vars
+  Line 58:27:  'setShowReportModal' is assigned a value but never used     no-unused-vars
+  Line 61:10:  'userReports' is assigned a value but never used            no-unused-vars
+  Line 61:23:  'setUserReports' is assigned a value but never used         no-unused-vars
+  Line 119:9:  'API_URL' is assigned a value but never used                no-unused-vars
+
+[39m[22m
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\components\Admin.js
+  Line 763:50:   'reportsData' is not defined  no-undef
+  Line 763:82:   'reportsData' is not defined  no-undef
+  Line 763:117:  'reportsData' is not defined  no-undef
+  Line 774:50:   'reportsData' is not defined  no-undef
+  Line 785:50:   'reportsData' is not defined  no-undef
+  Line 796:50:   'reportsData' is not defined  no-undef
+  Line 807:53:   'reportsData' is not defined  no-undef
+  Line 811:53:   'reportsData' is not defined  no-undef
+  Line 815:53:   'reportsData' is not defined  no-undef
+  Line 819:53:   'reportsData' is not defined  no-undef
+  Line 828:20:   'reportsData' is not defined  no-undef
+  Line 835:20:   'reportsData' is not defined  no-undef
+  Line 846:20:   'reportsData' is not defined  no-undef
+  Line 864:20:   'reportsData' is not defined  no-undef
+
+Search for the keywords to learn more about each [1m[31merror[39m[22m[1m.[39m[22m
+
+webpack compiled with [1m[31m1 error[39m[22m and [1m[33m1 warning[39m[22m
+
+==================================================
+

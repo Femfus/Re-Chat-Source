@@ -1,0 +1,1168 @@
+import React, { useState, useEffect } from 'react';
+import './Admin.css';
+import WorldMap from './WorldMap';
+
+const Admin = () => {
+  // State for invite codes
+  const [inviteCodes, setInviteCodes] = useState([]);
+  const [newCodePlan, setNewCodePlan] = useState('premium');
+  const [codeQuantity, setCodeQuantity] = useState(1);
+  const [expirationValue, setExpirationValue] = useState(30);
+  const [expirationUnit, setExpirationUnit] = useState('days');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  // State for users
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [newUserRank, setNewUserRank] = useState('');
+  const [newUserRole, setNewUserRole] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all'); // 'all', 'active', 'suspended', or 'banned'
+  const [resetLink, setResetLink] = useState(null);
+  const [showResetLinkModal, setShowResetLinkModal] = useState(false);
+  const [userDetails, setUserDetails] = useState(null);
+  const [showUserDetailsModal, setShowUserDetailsModal] = useState(false);
+  const [showBanConfirmation, setShowBanConfirmation] = useState(false);
+  const [userToBan, setUserToBan] = useState(null);
+  
+  // API URL
+  const API_URL = 'http://localhost:3000/api';
+
+  // State for active tab
+  const [activeTab, setActiveTab] = useState('invite-codes');
+  
+  // Fetch invite codes from API
+  useEffect(() => {
+    const fetchInviteCodes = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`${API_URL}/invite-codes`);
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch invite codes');
+        }
+        
+        const data = await response.json();
+        setInviteCodes(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching invite codes:', err.message);
+        setError('Failed to load invite codes. Using demo data.');
+        // Fallback to demo data if API is not available
+        setInviteCodes([
+          { id: 1, code: 'PREMIUM-1234-ABCD', plan: 'premium', used: false, created_at: '2025-05-01' },
+          { id: 2, code: 'PREMIUM-5678-EFGH', plan: 'premium', used: true, created_at: '2025-05-02' },
+          { id: 3, code: 'BUSINESS-9012-IJKL', plan: 'business', used: false, created_at: '2025-05-03' }
+        ]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchInviteCodes();
+  }, [API_URL]);
+  
+  // Fetch users from API
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`${API_URL}/users`);
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch users');
+        }
+        
+        const data = await response.json();
+        setUsers(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching users:', err.message);
+        setError('Failed to load users. Using demo data.');
+        // Fallback to demo data if API is not available
+        setUsers([
+          { id: 1, username: 'user1', plan: 'premium', role: 'owner', join_date: '2025-04-15 10:00:00', status: 'active' },
+          { id: 2, username: 'user2', plan: 'business', role: 'dev', join_date: '2025-04-20 14:20:00', status: 'active' },
+          { id: 3, username: 'user3', plan: 'free', role: 'staff', join_date: '2025-04-25 09:45:00', status: 'suspended' }
+        ]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchUsers();
+  }, [API_URL]);
+
+  // Generate a random invite code
+  const generateRandomCode = (plan) => {
+    const prefix = plan.toUpperCase();
+    const randomPart1 = Math.random().toString(36).substring(2, 6).toUpperCase();
+    const randomPart2 = Math.random().toString(36).substring(2, 6).toUpperCase();
+    return `${prefix}-${randomPart1}-${randomPart2}`;
+  };
+
+  // Generate new invite codes
+  const generateInviteCodes = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}/invite-codes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          plan: newCodePlan,
+          quantity: codeQuantity,
+          expirationValue: expirationValue,
+          expirationUnit: expirationUnit
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to generate invite codes');
+      }
+      
+      const newCodes = await response.json();
+      setInviteCodes([...newCodes, ...inviteCodes]);
+      setError(null);
+    } catch (err) {
+      console.error('Error generating invite codes:', err.message);
+      setError('Failed to generate invite codes. Using local generation.');
+      
+      // Fallback to local generation if API is not available
+      const newCodes = [];
+      // Calculate expiration date based on unit and value
+      const now = new Date();
+      let expiresAt;
+      
+      switch(expirationUnit) {
+        case 'hours':
+          expiresAt = new Date(now.getTime() + (expirationValue * 60 * 60 * 1000));
+          break;
+        case 'days':
+          expiresAt = new Date(now.getTime() + (expirationValue * 24 * 60 * 60 * 1000));
+          break;
+        case 'weeks':
+          expiresAt = new Date(now.getTime() + (expirationValue * 7 * 24 * 60 * 60 * 1000));
+          break;
+        case 'years':
+          expiresAt = new Date(now.getTime() + (expirationValue * 365 * 24 * 60 * 60 * 1000));
+          break;
+        default:
+          expiresAt = new Date(now.getTime() + (30 * 24 * 60 * 60 * 1000)); // Default to 30 days
+      }
+      
+      for (let i = 0; i < codeQuantity; i++) {
+        newCodes.push({
+          id: Math.floor(Math.random() * 10000),
+          code: generateRandomCode(newCodePlan),
+          plan: newCodePlan,
+          used: false,
+          created_at: new Date().toISOString(),
+          expires_at: expiresAt.toISOString()
+        });
+      }
+      setInviteCodes([...newCodes, ...inviteCodes]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Delete an invite code
+  const deleteInviteCode = async (codeId) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}/invite-codes/${codeId}`, {
+        method: 'DELETE'
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete invite code');
+      }
+      
+      setInviteCodes(inviteCodes.filter(code => code.id !== codeId));
+      setError(null);
+    } catch (err) {
+      console.error('Error deleting invite code:', err.message);
+      setError('Failed to delete invite code. Using local deletion.');
+      
+      // Fallback to local deletion if API is not available
+      setInviteCodes(inviteCodes.filter(code => code.id !== codeId));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Fetch user details
+  const fetchUserDetails = async (userId) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}/users/${userId}/details`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch user details');
+      }
+      
+      const data = await response.json();
+      setUserDetails(data);
+      setShowUserDetailsModal(true);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching user details:', err.message);
+      setError('Failed to fetch user details.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Generate password reset link
+  const generatePasswordResetLink = async (userId) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}/users/${userId}/reset-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to generate password reset link');
+      }
+      
+      const data = await response.json();
+      setResetLink(data.resetLink);
+      setShowResetLinkModal(true);
+      setError(null);
+    } catch (err) {
+      console.error('Error generating password reset link:', err.message);
+      setError('Failed to generate password reset link.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Change user plan
+  const changeUserRank = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}/users/${selectedUser.id}/plan`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ plan: newUserRank })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to change user plan');
+      }
+      
+      // Update local state
+      setUsers(users.map(user => {
+        if (user.id === selectedUser.id) {
+          return { ...user, plan: newUserRank };
+        }
+        return user;
+      }));
+      
+      setError(null);
+    } catch (err) {
+      console.error('Error changing user plan:', err.message);
+      setError('Failed to change user plan.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  // Change user role
+  const changeUserRole = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}/users/${selectedUser.id}/role`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ role: newUserRole })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to change user role');
+      }
+      
+      // Update local state
+      setUsers(users.map(user => {
+        if (user.id === selectedUser.id) {
+          return { ...user, role: newUserRole };
+        }
+        return user;
+      }));
+      
+      setError(null);
+    } catch (err) {
+      console.error('Error changing user role:', err.message);
+      setError('Failed to change user role.');
+    } finally {
+      setIsLoading(false);
+      setSelectedUser(null);
+      setNewUserRole('');
+      setNewUserRank('');
+    }
+  };
+
+  // Toggle user status (active/suspended)
+  const toggleUserStatus = async (userId) => {
+    try {
+      setIsLoading(true);
+      const userToUpdate = users.find(u => u.id === userId);
+      const newStatus = userToUpdate.status === 'active' ? 'suspended' : 'active';
+      
+      const response = await fetch(`${API_URL}/users/${userId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to toggle user status');
+      }
+      
+      // Update local state
+      setUsers(users.map(u => {
+        if (u.id === userId) {
+          return { ...u, status: newStatus };
+        }
+        return u;
+      }));
+      
+      setError(null);
+    } catch (err) {
+      console.error('Error toggling user status:', err.message);
+      setError('Failed to toggle user status. Using local toggle.');
+      
+      // Fallback to local toggle if API is not available
+      setUsers(users.map(u => {
+        if (u.id === userId) {
+          return { ...u, status: u.status === 'active' ? 'suspended' : 'active' };
+        }
+        return u;
+      }));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Ban a user
+  const banUser = async (userId) => {
+    try {
+      setIsLoading(true);
+      
+      const response = await fetch(`${API_URL}/users/${userId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status: 'banned' })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to ban user');
+      }
+      
+      // Update local state
+      setUsers(users.map(u => {
+        if (u.id === userId) {
+          return { ...u, status: 'banned' };
+        }
+        return u;
+      }));
+      
+      setError(null);
+      setShowBanConfirmation(false);
+      setUserToBan(null);
+    } catch (err) {
+      console.error('Error banning user:', err.message);
+      setError('Failed to ban user. Using local update.');
+      
+      // Fallback to local update if API is not available
+      setUsers(users.map(u => {
+        if (u.id === userId) {
+          return { ...u, status: 'banned' };
+        }
+        return u;
+      }));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Copy invite code to clipboard
+  const copyToClipboard = (code) => {
+    navigator.clipboard.writeText(code);
+  };
+
+  return (
+    <section className="admin" id="admin">
+      <div className="admin-container">
+        <div className="admin-header">
+          <h2>Admin Panel</h2>
+          <p>Manage invite codes and user rankings</p>
+        </div>
+        
+        {error && (
+          <div className="error-message">
+            <i className="fa-solid fa-triangle-exclamation"></i>
+            <p>{error}</p>
+          </div>
+        )}
+
+        <div className="tabs">
+          <button 
+            className={`tab ${activeTab === 'invite-codes' ? 'active' : ''}`}
+            onClick={() => setActiveTab('invite-codes')}
+          >
+            <i className="fa-solid fa-ticket"></i> Invite Codes
+          </button>
+          <button 
+            className={`tab ${activeTab === 'users' ? 'active' : ''}`}
+            onClick={() => setActiveTab('users')}
+          >
+            <i className="fa-solid fa-users"></i> Users
+          </button>
+          <button 
+            className={`tab ${activeTab === 'world-map' ? 'active' : ''}`}
+            onClick={() => setActiveTab('world-map')}
+          >
+            <i className="fa-solid fa-globe"></i> World Map
+          </button>
+        </div>
+
+        {activeTab === 'invite-codes' && (
+          <div className="tab-content">
+            <div className="generate-codes-section">
+              <h3>Generate New Invite Codes</h3>
+              <div className="generate-form">
+                <div className="form-group">
+                  <label htmlFor="plan">Subscription Plan</label>
+                  <select 
+                    id="plan" 
+                    value={newCodePlan} 
+                    onChange={(e) => setNewCodePlan(e.target.value)}
+                  >
+                    <option value="premium">Premium</option>
+                    <option value="business">Business</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="quantity">Quantity</label>
+                  <input 
+                    type="number" 
+                    id="quantity" 
+                    min="1" 
+                    max="100" 
+                    value={codeQuantity} 
+                    onChange={(e) => setCodeQuantity(parseInt(e.target.value))}
+                  />
+                </div>
+                <div className="form-group expiration-group">
+                  <label>Expiration Period</label>
+                  <div className="expiration-inputs">
+                    <input 
+                      type="number" 
+                      id="expirationValue" 
+                      min="1" 
+                      max="999" 
+                      value={expirationValue} 
+                      onChange={(e) => setExpirationValue(parseInt(e.target.value))}
+                    />
+                    <select 
+                      id="expirationUnit" 
+                      value={expirationUnit} 
+                      onChange={(e) => setExpirationUnit(e.target.value)}
+                    >
+                      <option value="hours">Hours</option>
+                      <option value="days">Days</option>
+                      <option value="weeks">Weeks</option>
+                      <option value="years">Years</option>
+                    </select>
+                  </div>
+                </div>
+                <button className="generate-button" onClick={() => setShowConfirmation(true)}>
+                  <i className="fa-solid fa-plus"></i> Generate Codes
+                </button>
+              </div>
+            
+            {error && (
+              <div className="error-message">
+                <i className="fa-solid fa-triangle-exclamation"></i>
+                <p>{error}</p>
+              </div>
+            )}
+
+            <div className="tabs">
+              <button 
+                className={`tab ${activeTab === 'invite-codes' ? 'active' : ''}`}
+                onClick={() => setActiveTab('invite-codes')}
+              >
+                <i className="fa-solid fa-ticket"></i> Invite Codes
+              </button>
+              <button 
+                className={`tab ${activeTab === 'users' ? 'active' : ''}`}
+                onClick={() => setActiveTab('users')}
+              >
+                <i className="fa-solid fa-users"></i> Users
+              </button>
+              <button 
+                className={`tab ${activeTab === 'world-map' ? 'active' : ''}`}
+                onClick={() => setActiveTab('world-map')}
+              >
+                <i className="fa-solid fa-globe"></i> World Map
+              </button>
+            </div>
+
+            {activeTab === 'invite-codes' && (
+              <div className="tab-content">
+                <div className="generate-codes-section">
+                  <h3>Generate New Invite Codes</h3>
+                  <div className="generate-form">
+                    <div className="form-group">
+                      <label htmlFor="plan">Subscription Plan</label>
+                      <select 
+                        id="plan" 
+                        value={newCodePlan} 
+                        onChange={(e) => setNewCodePlan(e.target.value)}
+                      >
+                        <option value="premium">Premium</option>
+                        <option value="business">Business</option>
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="quantity">Quantity</label>
+                      <input 
+                        type="number" 
+                        id="quantity" 
+                        min="1" 
+                        max="100" 
+                        value={codeQuantity} 
+                        onChange={(e) => setCodeQuantity(parseInt(e.target.value))}
+                      />
+                    </div>
+                    <div className="form-group expiration-group">
+                      <label>Expiration Period</label>
+                      <div className="expiration-inputs">
+                        <input 
+                          type="number" 
+                          id="expirationValue" 
+                          min="1" 
+                          max="999" 
+                          value={expirationValue} 
+                          onChange={(e) => setExpirationValue(parseInt(e.target.value))}
+                        />
+                        <select 
+                          id="expirationUnit" 
+                          value={expirationUnit} 
+                          onChange={(e) => setExpirationUnit(e.target.value)}
+                        >
+                          <option value="hours">Hours</option>
+                          <option value="days">Days</option>
+                          <option value="weeks">Weeks</option>
+                </div>
+                <div className="modal-body">
+                  <h4>You are about to generate:</h4>
+                  <div className="confirmation-details">
+                    <div className="detail-item">
+                      <span className="detail-label">Plan:</span>
+                      <span className={`plan-badge ${newCodePlan}`}>
+                        {newCodePlan.charAt(0).toUpperCase() + newCodePlan.slice(1)}
+                      </span>
+                    </div>
+                    <div className="detail-item">
+                      <span className="detail-label">Quantity:</span>
+                      <span className="detail-value">{codeQuantity} code{codeQuantity > 1 ? 's' : ''}</span>
+                    </div>
+                    <div className="detail-item">
+                      <span className="detail-label">Expiration:</span>
+                      <span className="detail-value">{expirationValue} {expirationUnit}</span>
+                    </div>
+                  </div>
+                  <p className="confirmation-note">
+                    <i className="fa-solid fa-info-circle"></i> These codes will be one-time use only and will expire after the specified period.
+                  </p>
+                </div>
+                <div className="modal-footer">
+                  <button className="cancel-button" onClick={() => setShowConfirmation(false)}>Cancel</button>
+                  <button 
+                    className="confirm-button" 
+                    onClick={() => {
+                      setShowConfirmation(false);
+                      generateInviteCodes();
+                    }}
+                  >
+                    Generate Codes
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="codes-list-section">
+            <h3>Existing Invite Codes</h3>
+            {isLoading && activeTab === 'invite-codes' ? (
+              <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <p>Loading invite codes...</p>
+              </div>
+            ) : (
+              <div className="codes-table-container">
+                {inviteCodes.length === 0 ? (
+                  <div className="empty-state">
+                    <i className="fa-solid fa-ticket-alt"></i>
+                    <p>No invite codes found. Generate some using the form above.</p>
+                  </div>
+                ) : (
+                  <table className="codes-table">
+                    <thead>
+                      <tr>
+                        <th>Invite Code</th>
+                        <th>Plan</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Expires</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {inviteCodes.map((code) => (
+                        <tr key={code.id} className={code.used ? 'used' : ''}>
+                          <td>{code.code}</td>
+                          <td>
+                            <span className={`plan-badge ${code.plan}`}>
+                              {code.plan.charAt(0).toUpperCase() + code.plan.slice(1)}
+                            </span>
+                          </td>
+                          <td>
+                            <span className={`status-badge ${code.used ? 'used' : 'available'}`}>
+                              {code.used ? (
+                                <>
+                                  <span className="used-text">Used by </span>
+                                  <span className="used-username">{code.used_by_username || 'Unknown User'}</span>
+                                </>
+                              ) : 'Available'}
+                            </span>
+                          </td>
+                          <td>{new Date(code.created_at).toLocaleDateString()}</td>
+                          <td>{code.expires_at ? new Date(code.expires_at).toLocaleDateString() : 'Never'}</td>
+                          <td>
+                            <button 
+                              className="action-button copy" 
+                              onClick={() => copyToClipboard(code.code)}
+                              disabled={code.used}
+                            >
+                              <i className="fa-solid fa-copy"></i>
+                            </button>
+                            <button 
+                              className="action-button delete" 
+                              onClick={() => deleteInviteCode(code.id)}
+                            >
+                              <i className="fa-solid fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'world-map' && (
+        <div className="tab-content">
+          <WorldMap API_URL={API_URL} />
+        </div>
+      )}
+
+      {activeTab === 'users' && (
+        <div className="tab-content">
+          <div className="users-list-section">
+            <div className="users-header">
+              <h3>Manage Users</h3>
+              <div className="filter-buttons">
+                <button 
+                  className={`filter-button ${statusFilter === 'all' ? 'active' : ''}`}
+                  onClick={() => setStatusFilter('all')}
+                >
+                  All Users
+                </button>
+                <button 
+                  className={`filter-button ${statusFilter === 'active' ? 'active' : ''}`}
+                  onClick={() => setStatusFilter('active')}
+                >
+                  Active Users
+                </button>
+                <button 
+                  className={`filter-button ${statusFilter === 'suspended' ? 'active' : ''}`}
+                  onClick={() => setStatusFilter('suspended')}
+                >
+                  Suspended Users
+                </button>
+                <button 
+                  className={`filter-button ${statusFilter === 'banned' ? 'active' : ''}`}
+                  onClick={() => setStatusFilter('banned')}
+                >
+                  Banned Users
+                </button>
+              </div>
+            </div>
+            {isLoading && activeTab === 'users' ? (
+              <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <p>Loading users...</p>
+            {showBanConfirmation && userToBan && (
+              <div className="modal-overlay">
+                <div className="ban-confirmation-modal">
+                  <div className="modal-header">
+                    <h3>Ban User</h3>
+                    <button className="close-button" onClick={() => {
+                      setShowBanConfirmation(false);
+                      setUserToBan(null);
+                    }}>
+                      <i className="fa-solid fa-times"></i>
+                    </button>
+                  </div>
+                  <div className="modal-body">
+                    <div className="ban-warning">
+                      <i className="fa-solid fa-exclamation-triangle"></i>
+                      <p>You are about to permanently ban <strong>{userToBan.username}</strong>.</p>
+                    </div>
+                    <p>Banned users:</p>
+                    <ul className="ban-consequences">
+                      <li>Cannot log in to the platform</li>
+                      <li>Will be moved to the "Banned Users" list</li>
+                      <li>Will lose access to all their data and conversations</li>
+                      <li>Cannot be unbanned without database intervention</li>
+                    </ul>
+                    <p className="confirmation-question">Are you sure you want to proceed?</p>
+                  </div>
+                  <div className="modal-footer">
+                    <button 
+                      className="cancel-button" 
+                      onClick={() => {
+                        setShowBanConfirmation(false);
+                        setUserToBan(null);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    <button 
+                      className="ban-button" 
+                      onClick={() => banUser(userToBan.id)}
+                    >
+                      Ban User
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="codes-list-section">
+              <h3>Existing Invite Codes</h3>
+              {isLoading && activeTab === 'invite-codes' ? (
+                <div className="loading-container">
+                  <div className="loading-spinner"></div>
+                  <p>Loading invite codes...</p>
+                </div>
+              ) : (
+                <div className="codes-table-container">
+                  {inviteCodes.length === 0 ? (
+                    <div className="empty-state">
+                      <i className="fa-solid fa-ticket-alt"></i>
+                      <p>No invite codes found. Generate some using the form above.</p>
+                    </div>
+                  ) : (
+                    <table className="codes-table">
+                      <thead>
+                        <tr>
+                          <th>Invite Code</th>
+                          <th>Plan</th>
+                          <th>Status</th>
+                          <th>Created</th>
+                          <th>Expires</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {inviteCodes.map((code) => (
+                          <tr key={code.id} className={code.used ? 'used' : ''}>
+                            <td>{code.code}</td>
+                            <td>
+                              <span className={`plan-badge ${code.plan}`}>
+                                {code.plan.charAt(0).toUpperCase() + code.plan.slice(1)}
+                              </span>
+                            </td>
+                            <td>
+                              <span className={`status-badge ${code.used ? 'used' : 'available'}`}>
+                                {code.used ? (
+                                  <>
+                                    <span className="used-text">Used by </span>
+                                    <span className="used-username">{code.used_by_username || 'Unknown User'}</span>
+                                  </>
+                                ) : 'Available'}
+                              </span>
+                            </td>
+                            <td>{new Date(code.created_at).toLocaleDateString()}</td>
+                            <td>{code.expires_at ? new Date(code.expires_at).toLocaleDateString() : 'Never'}</td>
+                            <td>
+                              <button 
+                                className="action-button copy" 
+                                onClick={() => copyToClipboard(code.code)}
+                                disabled={code.used}
+                              >
+                                <i className="fa-solid fa-copy"></i>
+                              </button>
+                              <button 
+                                className="action-button delete" 
+                                onClick={() => deleteInviteCode(code.id)}
+                              >
+                                <i className="fa-solid fa-trash"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'world-map' && (
+          <div className="tab-content">
+            <WorldMap API_URL={API_URL} />
+          </div>
+        )}
+
+        {activeTab === 'users' && (
+          <div className="tab-content">
+            <div className="users-list-section">
+              <div className="users-header">
+                <h3>Manage Users</h3>
+                <div className="filter-buttons">
+                  <button 
+                    className={`filter-button ${statusFilter === 'all' ? 'active' : ''}`}
+                    onClick={() => setStatusFilter('all')}
+                  >
+                    All Users
+                  </button>
+                  <button 
+                    className={`filter-button ${statusFilter === 'active' ? 'active' : ''}`}
+                    onClick={() => setStatusFilter('active')}
+                  >
+                    Active Users
+                  </button>
+                  <button 
+                    className={`filter-button ${statusFilter === 'suspended' ? 'active' : ''}`}
+                    onClick={() => setStatusFilter('suspended')}
+                  >
+                    Suspended Users
+                  </button>
+                  <button 
+                    className={`filter-button ${statusFilter === 'banned' ? 'active' : ''}`}
+                    onClick={() => setStatusFilter('banned')}
+                  >
+                    Banned Users
+                  </button>
+                </div>
+              </div>
+              {isLoading && activeTab === 'users' ? (
+                <div className="loading-container">
+                  <div className="loading-spinner"></div>
+                  <p>Loading users...</p>
+                </div>
+              ) : (
+                <div className="users-table-container">
+                  {(() => {
+                    // Filter users based on status filter
+                    const filteredUsers = statusFilter === 'all' 
+                      ? users 
+                      : users.filter(user => user.status === statusFilter);
+                    
+                    return filteredUsers.length === 0 ? (
+                      <div className="empty-state">
+                        <i className="fa-solid fa-users"></i>
+                        <p>No users found.</p>
+                      </div>
+                    ) : (
+                      <table className="users-table">
+                        <thead>
+                          <tr>
+                            <th>Username</th>
+                            <th>Plan</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Join Date</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {filteredUsers.map((user) => (
+                            <tr key={user.id} className={user.status === 'suspended' ? 'suspended' : ''}>
+                              <td>{user.username}</td>
+                              <td>
+                                <span className={`plan-badge ${user.plan}`}>
+                                  {user.plan.charAt(0).toUpperCase() + user.plan.slice(1)}
+                                </span>
+                              </td>
+                              <td>
+                                <span className={`role-badge ${user.role || 'user'}`}>
+                                  {user.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'User'}
+                                </span>
+                              </td>
+                              <td>
+                                <span className={`status-badge ${user.status}`}>
+                                  {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                                </span>
+                              </td>
+                              <td>{user.join_date}</td>
+                              <td>
+                                <button 
+                                  className="action-button edit" 
+                                  onClick={() => {
+                                    setSelectedUser(user);
+                                    setNewUserRank(user.plan);
+                                    setNewUserRole(user.role || 'user');
+                                  }}
+                                >
+                                  <i className="fa-solid fa-pen"></i>
+                                </button>
+                                {user.status !== 'banned' && (
+                                  <button 
+                                    className={`action-button ${user.status === 'active' ? 'suspend' : 'activate'}`}
+                                    onClick={() => toggleUserStatus(user.id)}
+                                    title={user.status === 'active' ? 'Suspend User' : 'Activate User'}
+                                  >
+                                    <i className={`fa-solid fa-${user.status === 'active' ? 'ban' : 'check'}`}></i>
+                                  </button>
+                                )}
+                                {user.status === 'suspended' && (
+                                  <button 
+                                    className="action-button ban"
+                                    onClick={() => {
+                                      setUserToBan(user);
+                                      setShowBanConfirmation(true);
+                                    }}
+                                    title="Ban User"
+                                  >
+                                    <i className="fa-solid fa-skull"></i>
+                                  </button>
+                                )}
+                                <button 
+                                  className="action-button reset-password"
+                                  onClick={() => generatePasswordResetLink(user.id)}
+                                  title="Generate password reset link"
+                                >
+                                  <i className="fa-solid fa-key"></i>
+                                </button>
+                                <button 
+                                  className="action-button view-details"
+                                  onClick={() => fetchUserDetails(user.id)}
+                                  title="View user details"
+                                >
+                                  <i className="fa-solid fa-eye"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    );
+                  })()}
+                </div>
+              )}
+            </div>
+
+            {selectedUser && (
+              <div className="edit-user-modal">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h3>Edit User</h3>
+                    <button className="close-button" onClick={() => setSelectedUser(null)}>
+                      <i className="fa-solid fa-times"></i>
+                    </button>
+                  </div>
+                  <div className="modal-body">
+                    <p>Editing user: <strong>{selectedUser.username}</strong></p>
+                    <div className="form-group">
+                      <label htmlFor="userRank">Plan</label>
+                      <select 
+                        id="userRank" 
+                        value={newUserRank} 
+                        onChange={(e) => setNewUserRank(e.target.value)}
+                      >
+                        <option value="free">Free</option>
+                        <option value="premium">Premium</option>
+                        <option value="business">Business</option>
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="userRole">Role</label>
+                      <select 
+                        id="userRole" 
+                        value={newUserRole} 
+                        onChange={(e) => setNewUserRole(e.target.value)}
+                      >
+                        <option value="user">User</option>
+                        <option value="staff">Staff</option>
+                        <option value="dev">Developer</option>
+                        <option value="owner">Owner</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="modal-footer">
+                    <button className="cancel-button" onClick={() => setSelectedUser(null)}>Cancel</button>
+                    <button className="save-button" onClick={() => {
+                      changeUserRank();
+                      changeUserRole();
+                    }}>Save Changes</button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Password Reset Link Modal */}
+        {showResetLinkModal && resetLink && (
+          <div className="edit-user-modal">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h3>Password Reset Link</h3>
+                <button className="close-button" onClick={() => {
+                  setShowResetLinkModal(false);
+                  setResetLink(null);
+                }}>
+                  <i className="fa-solid fa-times"></i>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p>Share this link with the user to reset their password:</p>
+                <div className="reset-link-container">
+                  <input 
+                    type="text" 
+                    value={resetLink} 
+                    readOnly 
+                    className="reset-link-input"
+                  />
+                  <button 
+                    className="copy-button"
+                    onClick={() => copyToClipboard(resetLink)}
+                  >
+                    <i className="fa-solid fa-copy"></i> Copy
+                  </button>
+                </div>
+                <p className="reset-link-note">This link will expire in 24 hours.</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* User Details Modal */}
+        {showUserDetailsModal && userDetails && (
+          <div className="edit-user-modal">
+            <div className="modal-content user-details-modal">
+              <div className="modal-header">
+                <h3>User Details: {userDetails.username}</h3>
+                <button className="close-button" onClick={() => {
+                  setShowUserDetailsModal(false);
+                  setUserDetails(null);
+                }}>
+                  <i className="fa-solid fa-times"></i>
+                </button>
+              </div>
+              <div className="modal-body">
+                <div className="user-details-grid">
+                  <div className="detail-item">
+                    <span className="detail-label">Username:</span>
+                    <span className="detail-value">{userDetails.username}</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Plan:</span>
+                    <span className="detail-value">
+                      <span className={`plan-badge ${userDetails.plan}`}>
+                        {userDetails.plan.charAt(0).toUpperCase() + userDetails.plan.slice(1)}
+                      </span>
+                    </span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Role:</span>
+                    <span className="detail-value">
+                      <span className={`role-badge ${userDetails.role || 'user'}`}>
+                        {userDetails.role ? userDetails.role.charAt(0).toUpperCase() + userDetails.role.slice(1) : 'User'}
+                      </span>
+                    </span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Status:</span>
+                    <span className="detail-value">
+                      <span className={`status-badge ${userDetails.status}`}>
+                        {userDetails.status.charAt(0).toUpperCase() + userDetails.status.slice(1)}
+                      </span>
+                    </span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Join Date:</span>
+                    <span className="detail-value">{new Date(userDetails.join_date).toLocaleDateString()}</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Last Online:</span>
+                    <span className="detail-value">{new Date(userDetails.last_online).toLocaleDateString()} {new Date(userDetails.last_online).toLocaleTimeString()}</span>
+                  </div>
+                  {userDetails.last_password_reset && (
+                    <div className="detail-item">
+                      <span className="detail-label">Last Password Reset:</span>
+                      <span className="detail-value">{new Date(userDetails.last_password_reset).toLocaleDateString()}</span>
+                    </div>
+                  )}
+                  {userDetails.operating_system && (
+                    <div className="detail-item">
+                      <span className="detail-label">Operating System:</span>
+                      <span className="detail-value">{userDetails.operating_system}</span>
+                    </div>
+                  )}
+                  {userDetails.country && (
+                    <div className="detail-item">
+                      <span className="detail-label">Country:</span>
+                      <span className="detail-value">{userDetails.country}</span>
+                    </div>
+                  )}
+                  {userDetails.ip_address && (
+                    <div className="detail-item">
+                      <span className="detail-label">IP Address:</span>
+                      <span className="detail-value">{userDetails.ip_address}</span>
+                    </div>
+                  )}
+                  {userDetails.user_agent && (
+                    <div className="detail-item">
+                      <span className="detail-label">Browser/Device:</span>
+                      <span className="detail-value">{userDetails.user_agent}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+export default Admin;

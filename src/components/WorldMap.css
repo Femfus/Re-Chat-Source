@@ -1,0 +1,131 @@
+.world-map-container {
+  padding: 1rem;
+}
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background-color: var(--surface);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.map-tooltip {
+  position: fixed;
+  background-color: rgba(10, 10, 10, 0.9);
+  color: var(--text-light);
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  pointer-events: none;
+  z-index: 1000;
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.map-stats {
+  margin-bottom: 1.5rem;
+}
+
+.map-stats h3 {
+  font-size: 1.2rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: var(--surface);
+  border-radius: 8px;
+  border: 1px solid rgba(138, 43, 226, 0.1);
+}
+
+.country-name {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.user-count {
+  background-color: var(--accent-purple);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.map-legend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-color {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 4px;
+}
+
+.legend-item span:last-child {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.map-error {
+  background-color: rgba(255, 107, 107, 0.1);
+  border-left: 3px solid #ff6b6b;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  color: #ff6b6b;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  background-color: var(--surface);
+  border-radius: 12px;
+  border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.loading-spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid rgba(138, 43, 226, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--accent-purple);
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.loading-container p {
+  color: var(--text-muted);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

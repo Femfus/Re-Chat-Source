@@ -1,0 +1,103 @@
+==================================================
+TIMESTAMP: 2025-05-10 21:14:07
+TYPE: Frontend Error
+MESSAGE: Failed to compile.
+
+[eslint] 
+src\components\AdminLogin.js
+Syntax error: Expecting Unicode escape sequence \uXXXX. (202:36) (202:36)
+
+==================================================
+
+==================================================
+TIMESTAMP: 2025-05-10 21:14:07
+TYPE: Frontend Error
+MESSAGE: [1m[33mWARNING[39m[22m in [1m[eslint] 
+src\components\Admin.js
+  Line 43:22:  'setSystemData' is assigned a value but never used  no-unused-vars
+  Line 151:9:  'API_URL' is assigned a value but never used        no-unused-vars
+
+src\components\Auth.js
+  Line 1:27:   'useEffect' is defined but never used                        no-unused-vars
+  Line 14:10:  'showTosNotification' is assigned a value but never used     no-unused-vars
+  Line 14:31:  'setShowTosNotification' is assigned a value but never used  no-unused-vars
+  Line 15:10:  'tosTimer' is assigned a value but never used                no-unused-vars
+  Line 15:20:  'setTosTimer' is assigned a value but never used             no-unused-vars
+
+src\components\Dashboard.js
+  Line 2:23:  'Link' is defined but never used  no-unused-vars
+
+[39m[22m
+
+[1m[31mERROR[39m[22m in [1m./src/components/AdminLogin.js[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\Cila\Desktop\re-chat.to\src\components\AdminLogin.js: Expecting Unicode escape sequence \uXXXX. (202:36)
+
+[0m [90m 200 |[39m       [90m// In a real app, the server would encrypt this with the user's public key[39m
+ [90m 201 |[39m       [90m// For this demo, we're using a mock encrypted message[39m
+[31m[1m>[22m[39m[90m 202 |[39m       [36mconst[39m mockEncryptedMessage [33m=[39m [37m[41m[1m\[22m[49m[39m[32m`-----BEGIN PGP MESSAGE-----[39m
+ [90m     |[39m                                     [31m[1m^[22m[39m
+ [90m 203 |[39m [32mVersion: OpenPGP.js v4.10.10[39m
+ [90m 204 |[39m [32mComment: https://openpgpjs.org[39m
+ [90m 205 |[39m [32m[39m[0m
+    at constructor (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:360:19)
+    at FlowParserMixin.raise (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:6613:19)
+    at FlowParserMixin.readWord1 (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:6573:16)
+    at FlowParserMixin.readWord (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:6593:23)
+    at FlowParserMixin.getTokenFromCode (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:6312:14)
+    at FlowParserMixin.getTokenFromCode (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4803:11)
+    at FlowParserMixin.getTokenFromCode (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3201:13)
+    at FlowParserMixin.nextToken (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:5796:10)
+    at FlowParserMixin.next (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:5706:10)
+    at FlowParserMixin.eat (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:5710:12)
+    at FlowParserMixin.parseVar (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:13260:25)
+    at FlowParserMixin.parseVarStatement (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:13106:10)
+    at FlowParserMixin.parseStatementContent (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12727:23)
+    at FlowParserMixin.parseStatementLike (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12644:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:2922:24)
+    at FlowParserMixin.parseStatementListItem (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12624:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:13192:61)
+    at FlowParserMixin.parseBlockBody (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:13185:10)
+    at FlowParserMixin.parseBlock (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:13173:10)
+    at FlowParserMixin.parseTryStatement (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:13081:23)
+    at FlowParserMixin.parseStatementContent (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12681:21)
+    at FlowParserMixin.parseStatementLike (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12644:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:2922:24)
+    at FlowParserMixin.parseStatementListItem (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12624:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:13192:61)
+    at FlowParserMixin.parseBlockBody (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:13185:10)
+    at FlowParserMixin.parseBlock (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:13173:10)
+    at FlowParserMixin.parseFunctionBody (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12018:24)
+    at C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:2896:63
+    at FlowParserMixin.forwardNoArrowParamsConversionAt (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3072:16)
+    at FlowParserMixin.parseFunctionBody (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:2896:12)
+    at FlowParserMixin.parseArrowExpression (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:11993:10)
+    at FlowParserMixin.parseAsyncArrowFromCallExpression (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:11175:10)
+    at FlowParserMixin.parseAsyncArrowFromCallExpression (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3493:18)
+    at FlowParserMixin.parseCoverCallAndAsyncArrowHead (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:11105:27)
+    at FlowParserMixin.parseSubscript (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:11031:19)
+    at FlowParserMixin.parseSubscript (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3656:18)
+    at FlowParserMixin.parseSubscripts (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:11005:19)
+    at FlowParserMixin.parseSubscripts (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3622:18)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10996:17)
+    at FlowParserMixin.parseUpdate (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10977:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10957:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10810:61)
+    at FlowParserMixin.parseExprOps (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10815:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10792:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10745:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3555:18)
+    at C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10714:39
+    at FlowParserMixin.allowInAnd (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12329:16)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10714:17)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\components\AdminLogin.js
+  Line 202:36:  Parsing [1m[31merror[39m[22m[1m: Expecting Unicode escape sequence \uXXXX. (202:36)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m and [1m[33m1 warning[39m[22m
+
+==================================================
+

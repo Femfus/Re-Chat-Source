@@ -1,0 +1,86 @@
+==================================================
+TIMESTAMP: 2025-05-10 18:13:15
+TYPE: Frontend Error
+MESSAGE: Failed to compile.
+
+[eslint] 
+src\components\Admin.js
+Syntax error: Expected corresponding JSX closing tag for <th>. (668:28) (668:28)
+
+==================================================
+
+==================================================
+TIMESTAMP: 2025-05-10 18:13:15
+TYPE: Frontend Error
+MESSAGE: [1m[31mERROR[39m[22m in [1m./src/components/Admin.js[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\Cila\Desktop\re-chat.to\src\components\Admin.js: Expected corresponding JSX closing tag for <th>. (668:28)
+
+[0m [90m 666 |[39m                                 [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m 667 |[39m                               [33m<[39m[33m/[39m[33mtd[39m[33m>[39m
+[31m[1m>[22m[39m[90m 668 |[39m                             [33m<[39m[33m/[39m[33mtr[39m[33m>[39m
+ [90m     |[39m                             [31m[1m^[22m[39m
+ [90m 669 |[39m                           ))}
+ [90m 670 |[39m                         [33m<[39m[33m/[39m[33mtbody[39m[33m>[39m
+ [90m 671 |[39m                       [33m<[39m[33m/[39m[33mtable[39m[33m>[39m[0m
+    at constructor (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:360:19)
+    at FlowParserMixin.raise (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:6613:19)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4733:16)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4704:32)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4704:32)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4704:32)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4704:32)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4704:32)
+    at FlowParserMixin.jsxParseElement (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4755:17)
+    at FlowParserMixin.parseExprAtom (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4765:19)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10992:23)
+    at FlowParserMixin.parseUpdate (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10977:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10957:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10810:61)
+    at FlowParserMixin.parseExprOps (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10815:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10792:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10745:21)
+    at C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3504:39
+    at FlowParserMixin.tryParse (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:6922:20)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3504:18)
+    at C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10714:39
+    at FlowParserMixin.allowInAnd (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12334:12)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10714:17)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:11591:28)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3597:18)
+    at FlowParserMixin.parseExprAtom (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:11242:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4770:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10992:23)
+    at FlowParserMixin.parseUpdate (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10977:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10957:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10810:61)
+    at FlowParserMixin.parseExprOps (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10815:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10792:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10745:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3555:18)
+    at C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3022:77
+    at FlowParserMixin.forwardNoArrowParamsConversionAt (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3072:16)
+    at FlowParserMixin.parseConditional (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3022:27)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10796:17)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10745:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3555:18)
+    at C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3022:77
+    at FlowParserMixin.forwardNoArrowParamsConversionAt (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3072:16)
+    at FlowParserMixin.parseConditional (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3022:27)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10796:17)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10745:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3555:18)
+    at FlowParserMixin.parseExpressionBase (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10698:23)
+    at C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10694:39
+    at FlowParserMixin.allowInAnd (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12334:12)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\components\Admin.js
+  Line 668:28:  Parsing [1m[31merror[39m[22m[1m: Expected corresponding JSX closing tag for <th>. (668:28)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m
+
+==================================================
+

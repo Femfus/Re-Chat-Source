@@ -1,0 +1,208 @@
+.pricing {
+  padding: 6rem 0;
+  background-color: var(--background);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.pricing-card {
+  background-color: var(--surface);
+  border-radius: var(--border-radius);
+  padding: 2.5rem 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 2px solid transparent;
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--box-shadow);
+}
+
+.pricing-card.popular {
+  border-color: var(--primary);
+  transform: scale(1.05);
+  z-index: 1;
+}
+
+.pricing-card.popular:hover {
+  transform: scale(1.05) translateY(-5px);
+}
+
+.popular-badge {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background-color: var(--primary);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.plan-name {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.plan-price {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: baseline;
+}
+
+.currency {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: 2px;
+}
+
+.amount {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.period {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-left: 2px;
+}
+
+.plan-description {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.plan-features {
+  list-style: none;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.plan-features li {
+  padding: 0.5rem 0;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.plan-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.pricing-card .btn {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.payment-methods span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.crypto-icons-small {
+  display: flex;
+  gap: 1rem;
+}
+
+.crypto-icons-small i {
+  font-size: 1.5rem;
+  color: var(--accent-purple);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.crypto-icons-small i:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+}
+
+.pricing-note {
+  text-align: center;
+  margin-top: 3rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.crypto-payment-notice {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: rgba(138, 43, 226, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.crypto-icons {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.crypto-payment-notice i {
+  font-size: 2.5rem;
+  color: var(--accent-purple);
+  text-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+}
+
+.crypto-payment-notice p {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.crypto-payment-notice strong {
+  color: var(--accent-purple);
+}
+
+@media (max-width: 992px) {
+  .pricing-card.popular {
+    transform: none;
+  }
+  
+  .pricing-card.popular:hover {
+    transform: translateY(-5px);
+  }
+}
+
+@media (max-width: 768px) {
+  .pricing {
+    padding: 4rem 0;
+  }
+  
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+}

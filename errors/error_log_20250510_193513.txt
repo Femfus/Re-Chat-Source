@@ -1,0 +1,93 @@
+==================================================
+TIMESTAMP: 2025-05-10 19:35:13
+TYPE: Frontend Error
+MESSAGE: Failed to compile.
+
+[eslint] 
+src\components\TermsOfService.js
+Syntax error: Unterminated JSX contents. (167:10) (167:10)
+
+==================================================
+
+==================================================
+TIMESTAMP: 2025-05-10 19:35:13
+TYPE: Frontend Error
+MESSAGE: [1m[33mWARNING[39m[22m in [1m[eslint] 
+src\components\Admin.js
+  Line 13:22:  'setSystemData' is assigned a value but never used  no-unused-vars
+  Line 121:9:  'API_URL' is assigned a value but never used        no-unused-vars
+
+[39m[22m
+
+[1m[31mERROR[39m[22m in [1m./src/components/TermsOfService.js[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\Cila\Desktop\re-chat.to\src\components\TermsOfService.js: Unterminated JSX contents. (167:10)
+
+[0m [90m 165 |[39m         [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m 166 |[39m       [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+[31m[1m>[22m[39m[90m 167 |[39m     [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m     |[39m           [31m[1m^[22m[39m
+ [90m 168 |[39m   )[33m;[39m
+ [90m 169 |[39m }[33m;[39m
+ [90m 170 |[39m[0m
+    at constructor (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:360:19)
+    at FlowParserMixin.raise (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:6613:19)
+    at FlowParserMixin.jsxReadToken (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4454:20)
+    at FlowParserMixin.getTokenFromCode (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4780:12)
+    at FlowParserMixin.getTokenFromCode (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3201:13)
+    at FlowParserMixin.nextToken (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:5796:10)
+    at FlowParserMixin.next (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:5706:10)
+    at FlowParserMixin.eat (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:5710:12)
+    at FlowParserMixin.expect (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:6913:15)
+    at FlowParserMixin.jsxParseClosingElementAt (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4686:10)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4701:37)
+    at FlowParserMixin.jsxParseElementAt (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4704:32)
+    at FlowParserMixin.jsxParseElement (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4755:17)
+    at FlowParserMixin.parseExprAtom (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4765:19)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10992:23)
+    at FlowParserMixin.parseUpdate (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10977:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10957:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10810:61)
+    at FlowParserMixin.parseExprOps (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10815:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10792:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10745:21)
+    at C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3504:39
+    at FlowParserMixin.tryParse (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:6922:20)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3504:18)
+    at C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10714:39
+    at FlowParserMixin.allowInAnd (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12334:12)
+    at FlowParserMixin.parseMaybeAssignAllowIn (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10714:17)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:11591:28)
+    at FlowParserMixin.parseParenAndDistinguishExpression (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3597:18)
+    at FlowParserMixin.parseExprAtom (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:11242:23)
+    at FlowParserMixin.parseExprAtom (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:4770:20)
+    at FlowParserMixin.parseExprSubscripts (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10992:23)
+    at FlowParserMixin.parseUpdate (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10977:21)
+    at FlowParserMixin.parseMaybeUnary (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10957:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10810:61)
+    at FlowParserMixin.parseExprOps (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10815:23)
+    at FlowParserMixin.parseMaybeConditional (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10792:23)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10745:21)
+    at FlowParserMixin.parseMaybeAssign (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:3555:18)
+    at FlowParserMixin.parseExpressionBase (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10698:23)
+    at C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10694:39
+    at FlowParserMixin.allowInAnd (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12329:16)
+    at FlowParserMixin.parseExpression (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:10694:17)
+    at FlowParserMixin.parseReturnStatement (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:13018:28)
+    at FlowParserMixin.parseStatementContent (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12675:21)
+    at FlowParserMixin.parseStatementLike (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12644:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:2922:24)
+    at FlowParserMixin.parseStatementListItem (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:12624:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:13192:61)
+    at FlowParserMixin.parseBlockBody (C:\Users\Cila\Desktop\re-chat.to\node_modules\@babel\parser\lib\index.js:13185:10)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\components\TermsOfService.js
+  Line 167:10:  Parsing [1m[31merror[39m[22m[1m: Unterminated JSX contents. (167:10)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m and [1m[33m1 warning[39m[22m
+
+==================================================
+

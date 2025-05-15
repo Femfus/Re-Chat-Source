@@ -1,0 +1,365 @@
+import React, { useState, useEffect } from 'react';
+import WorldMap from './WorldMap';
+import './Admin.css';
+
+const Admin = () => {
+  // State for users
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [newUserRank, setNewUserRank] = useState('');
+  const [newUserRole, setNewUserRole] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all'); // 'all', 'active', 'suspended', or 'banned'
+  const [resetLink, setResetLink] = useState(null);
+  const [showResetLinkModal, setShowResetLinkModal] = useState(false);
+  const [userDetails, setUserDetails] = useState(null);
+  const [showUserDetailsModal, setShowUserDetailsModal] = useState(false);
+  const [showBanConfirmation, setShowBanConfirmation] = useState(false);
+  const [userToBan, setUserToBan] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  
+  // API URL
+  const API_URL = 'http://localhost:3000/api';
+  
+  // Toggle user status (active/suspended)
+  const toggleUserStatus = async (userId) => {
+    try {
+      setIsLoading(true);
+      const userToUpdate = users.find(u => u.id === userId);
+      const newStatus = userToUpdate.status === 'active' ? 'suspended' : 'active';
+      
+      const response = await fetch(`${API_URL}/users/${userId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to toggle user status');
+      }
+      
+      // Update local state
+      setUsers(users.map(u => {
+        if (u.id === userId) {
+          return { ...u, status: newStatus };
+        }
+        return u;
+      }));
+      
+      setError(null);
+    } catch (err) {
+      console.error('Error toggling user status:', err.message);
+      setError('Failed to toggle user status. Using local toggle.');
+      
+      // Fallback to local toggle if API is not available
+      setUsers(users.map(u => {
+        if (u.id === userId) {
+          return { ...u, status: u.status === 'active' ? 'suspended' : 'active' };
+        }
+        return u;
+      }));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  // Ban a user
+  const banUser = async (userId) => {
+    try {
+      setIsLoading(true);
+      
+      const response = await fetch(`${API_URL}/users/${userId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status: 'banned' })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to ban user');
+      }
+      
+      // Update local state
+      setUsers(users.map(u => {
+        if (u.id === userId) {
+          return { ...u, status: 'banned' };
+        }
+        return u;
+      }));
+      
+      setError(null);
+      setShowBanConfirmation(false);
+      setUserToBan(null);
+    } catch (err) {
+      console.error('Error banning user:', err.message);
+      setError('Failed to ban user. Using local update.');
+      
+      // Fallback to local update if API is not available
+      setUsers(users.map(u => {
+        if (u.id === userId) {
+          return { ...u, status: 'banned' };
+        }
+        return u;
+      }));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <section className="admin-section">
+      <div className="admin-container">
+        <div className="admin-header">
+          <h2>Admin Panel</h2>
+          <p>Manage invite codes and user rankings</p>
+        </div>
+        
+        {error && (
+          <div className="error-message">
+            <i className="fa-solid fa-triangle-exclamation"></i>
+            <p>{error}</p>
+          </div>
+        )}
+        
+        <div className="admin-tabs">
+          <button 
+            className={`tab-button ${activeTab === 'users' ? 'active' : ''}`}
+            onClick={() => setActiveTab('users')}
+          >
+            <i className="fa-solid fa-users"></i>
+            Users
+          </button>
+          
+          <button 
+            className={`tab-button ${activeTab === 'invite-codes' ? 'active' : ''}`}
+            onClick={() => setActiveTab('invite-codes')}
+          >
+            <i className="fa-solid fa-ticket"></i>
+            Invite Codes
+          </button>
+          
+          <button 
+            className={`tab-button ${activeTab === 'world-map' ? 'active' : ''}`}
+            onClick={() => setActiveTab('world-map')}
+          >
+            <i className="fa-solid fa-globe"></i>
+            World Map
+          </button>
+          
+          <button 
+            className={`tab-button ${activeTab === 'settings' ? 'active' : ''}`}
+            onClick={() => setActiveTab('settings')}
+          >
+            <i className="fa-solid fa-gear"></i>
+            Settings
+          </button>
+        </div>
+        
+        {/* Users Tab */}
+        {activeTab === 'users' && (
+          <div className="tab-content">
+            <div className="users-list-section">
+              <div className="users-header">
+                <h3>Manage Users</h3>
+                <div className="filter-buttons">
+                  <button 
+                    className={`filter-button ${statusFilter === 'all' ? 'active' : ''}`}
+                    onClick={() => setStatusFilter('all')}
+                  >
+                    All Users
+                  </button>
+                  <button 
+                    className={`filter-button ${statusFilter === 'active' ? 'active' : ''}`}
+                    onClick={() => setStatusFilter('active')}
+                  >
+                    Active Users
+                  </button>
+                  <button 
+                    className={`filter-button ${statusFilter === 'suspended' ? 'active' : ''}`}
+                    onClick={() => setStatusFilter('suspended')}
+                  >
+                    Suspended
+                  </button>
+                  <button 
+                    className={`filter-button ${statusFilter === 'banned' ? 'active' : ''}`}
+                    onClick={() => setStatusFilter('banned')}
+                  >
+                    Banned
+                  </button>
+                </div>
+              </div>
+              <div className="users-list">
+                {isLoading ? (
+                  <div className="loading-indicator">
+                    <i className="fa-solid fa-spinner fa-spin"></i>
+                    <p>Loading users...</p>
+                  </div>
+                ) : users.filter(user => statusFilter === 'all' || user.status === statusFilter).length === 0 ? (
+                  <div className="no-users-message">
+                    <i className="fa-solid fa-user-slash"></i>
+                    <p>No users found with the selected filter.</p>
+                  </div>
+                ) : (
+                  <table className="users-table">
+                    <thead>
+                      <tr>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Last Active</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {users
+                        .filter(user => statusFilter === 'all' || user.status === statusFilter)
+                        .map(user => (
+                          <tr key={user.id} className={user.status}>
+                            <td className="user-cell">
+                              <div className="user-avatar">
+                                {user.avatar ? (
+                                  <img src={user.avatar} alt={`${user.username}'s avatar`} />
+                                ) : (
+                                  <div className="avatar-placeholder">
+                                    {user.username.charAt(0).toUpperCase()}
+                                  </div>
+                                )}
+                              </div>
+                              <div className="user-info">
+                                <span className="username">{user.username}</span>
+                                <span className="user-rank">{user.rank || 'New User'}</span>
+                              </div>
+                            </td>
+                            <td>{user.email}</td>
+                            <td>
+                              <span className={`role-badge ${user.role || 'user'}`}>
+                                {user.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'User'}
+                              </span>
+                            </td>
+                            <td>
+                              <span className={`status-badge ${user.status}`}>
+                                {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                              </span>
+                            </td>
+                            <td>{new Date(user.last_active).toLocaleDateString()}</td>
+                            <td className="actions-cell">
+                              <div className="user-actions">
+                                <button 
+                                  className="action-button view-details"
+                                  onClick={() => {
+                                    setUserDetails(user);
+                                    setShowUserDetailsModal(true);
+                                  }}
+                                  title="View User Details"
+                                >
+                                  <i className="fa-solid fa-eye"></i>
+                                </button>
+                                <button 
+                                  className="action-button reset-password"
+                                  onClick={() => generatePasswordResetLink(user.id)}
+                                  title="Generate Password Reset Link"
+                                >
+                                  <i className="fa-solid fa-key"></i>
+                                </button>
+                                {user.status !== 'banned' && (
+                                  <button 
+                                    className={`action-button ${user.status === 'active' ? 'suspend' : 'activate'}`}
+                                    onClick={() => toggleUserStatus(user.id)}
+                                    title={user.status === 'active' ? 'Suspend User' : 'Activate User'}
+                                  >
+                                    <i className={`fa-solid fa-${user.status === 'active' ? 'ban' : 'check'}`}></i>
+                                  </button>
+                                )}
+                                {user.status === 'suspended' && (
+                                  <button 
+                                    className="action-button ban"
+                                    onClick={() => {
+                                      setUserToBan(user);
+                                      setShowBanConfirmation(true);
+                                    }}
+                                    title="Ban User"
+                                  >
+                                    <i className="fa-solid fa-skull"></i>
+                                  </button>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* World Map Tab */}
+        {activeTab === 'world-map' && (
+          <div className="tab-content">
+            <WorldMap API_URL={API_URL} />
+          </div>
+        )}
+        
+        {/* Ban User Confirmation Modal */}
+        {showBanConfirmation && userToBan && (
+          <div className="modal-overlay">
+            <div className="modal ban-confirmation-modal">
+              <div className="modal-header">
+                <h3>Confirm Ban User</h3>
+                <button 
+                  className="close-button"
+                  onClick={() => {
+                    setShowBanConfirmation(false);
+                    setUserToBan(null);
+                  }}
+                >
+                  <i className="fa-solid fa-times"></i>
+                </button>
+              </div>
+              <div className="modal-content">
+                <div className="warning-icon">
+                  <i className="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <p className="ban-warning">
+                  You are about to ban <strong>{userToBan.username}</strong> ({userToBan.email}).
+                </p>
+                <p>Banning a user has the following consequences:</p>
+                <ul className="ban-consequences">
+                  <li>User will be permanently blocked from accessing the platform</li>
+                  <li>User will not be able to create another account with the same email</li>
+                  <li>User's messages will be hidden from other users</li>
+                  <li>User will be moved to the "Banned Users" list</li>
+                </ul>
+                <p className="ban-final-warning">This action cannot be easily reversed.</p>
+              </div>
+              <div className="modal-actions">
+                <button 
+                  className="cancel-button"
+                  onClick={() => {
+                    setShowBanConfirmation(false);
+                    setUserToBan(null);
+                  }}
+                >
+                  Cancel
+                </button>
+                <button 
+                  className="confirm-button ban-button"
+                  onClick={() => banUser(userToBan.id)}
+                >
+                  Confirm Ban
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+export default Admin;

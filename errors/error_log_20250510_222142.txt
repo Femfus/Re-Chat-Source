@@ -1,0 +1,49 @@
+
+==================================================
+TIMESTAMP: 2025-05-10 22:21:42
+TYPE: Frontend Error
+MESSAGE: Syntax error: Unexpected token, expected ":" (948:9) (948:9)
+==================================================
+
+
+==================================================
+TIMESTAMP: 2025-05-10 22:21:42
+TYPE: Frontend Error
+MESSAGE: [1m[31mERROR[39m[22m in [1m./src/components/AdminLogin.js[39m[22m
+==================================================
+
+
+==================================================
+TIMESTAMP: 2025-05-10 22:21:42
+TYPE: Frontend Error
+MESSAGE: SyntaxError: c:\Users\Cila\Desktop\re-chat.to\src\components\AdminLogin.js: Unexpected token, expected ":" (948:9)
+==================================================
+
+
+==================================================
+TIMESTAMP: 2025-05-10 22:21:42
+TYPE: Frontend Error
+MESSAGE: [90m 950 |[39m       [36mcase[39m [32m'error'[39m[33m:[39m
+==================================================
+
+
+==================================================
+TIMESTAMP: 2025-05-10 22:21:42
+TYPE: Frontend Error
+MESSAGE: [1m[31mERROR[39m[22m in [1m[eslint]
+==================================================
+
+
+==================================================
+TIMESTAMP: 2025-05-10 22:21:42
+TYPE: Frontend Error
+MESSAGE: Line 948:9:  Parsing [1m[31merror[39m[22m[1m: [1m[31mUnexpected[39m[22m[1m token, expected ":" (948:9)
+==================================================
+
+
+==================================================
+TIMESTAMP: 2025-05-10 22:21:42
+TYPE: Frontend Error
+MESSAGE: webpack compiled with [1m[31m2 errors[39m[22m and [1m[33m1 warning[39m[22m
+==================================================
+

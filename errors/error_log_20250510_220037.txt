@@ -1,0 +1,28 @@
+
+==================================================
+TIMESTAMP: 2025-05-10 22:00:37
+TYPE: Frontend Error
+MESSAGE: Search for the keywords to learn more about each error.
+==================================================
+
+
+==================================================
+TIMESTAMP: 2025-05-10 22:00:37
+TYPE: Frontend Error
+MESSAGE: [1m[31mERROR[39m[22m in [1m[eslint]
+==================================================
+
+
+==================================================
+TIMESTAMP: 2025-05-10 22:00:37
+TYPE: Frontend Error
+MESSAGE: Search for the keywords to learn more about each [1m[31merror[39m[22m[1m.[39m[22m
+==================================================
+
+
+==================================================
+TIMESTAMP: 2025-05-10 22:00:37
+TYPE: Frontend Error
+MESSAGE: webpack compiled with [1m[31m1 error[39m[22m and [1m[33m1 warning[39m[22m
+==================================================
+

@@ -1,0 +1,56 @@
+{
+  "name": "re-chat-to-server-control",
+  "version": "1.0.0",
+  "description": "Server Control Panel for Re-Chat.to Secure PGP Chat Application",
+  "main": "server-control.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "package-win": "electron-builder --win",
+    "package-mac": "electron-builder --mac",
+    "package-linux": "electron-builder --linux"
+  },
+  "author": "PGP Chat Team",
+  "license": "MIT",
+  "dependencies": {
+    "date-fns": "^2.30.0",
+    "electron-is-dev": "^2.0.0",
+    "find-process": "^1.4.7",
+    "portfinder": "^1.0.32"
+  },
+  "devDependencies": {
+    "electron": "^25.3.1",
+    "electron-builder": "^24.4.0"
+  },
+  "build": {
+    "appId": "com.pgpchat.servercontrol",
+    "productName": "Re-Chat.to Server Control",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "server-control.js",
+      "server-control.html",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "icons/icon.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "icons/icon.icns"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "icon": "icons/icon.png"
+    }
+  }
+}
